@@ -11,12 +11,17 @@ export default class FormAddCampaign extends Component {
     super(props)
 
     this.state = {
-      currentValue: ''
+      campaignTitle: '',
+      campaignWallets: ''
     }
-    this.changeValue = this.changeValue.bind(this)
+    this.changeTitle = this.changeTitle.bind(this)
+    this.changeWallets = this.changeWallets.bind(this)
   }
-  changeValue(e) {
-    this.setState({ currentValue: e.target.value })
+  changeTitle(e) {
+    this.setState({ campaignTitle: e.target.value })
+  }
+  changeWallets(e) {
+    this.setState({ campaignWallets: e.target.value })
   }
 
   render() {
@@ -26,13 +31,13 @@ export default class FormAddCampaign extends Component {
           <FormGroup row>
             <Label for="campaignTitle" sm={2}>Title</Label>
             <Col sm={10}>
-              <Input type="text" name="title" id="campaignTitle" placeholder="Insert a title for the campaign" />
+              <Input type="text" name="campaignTitle" id="campaignTitle" onChange={this.changeTitle} value={this.state.campaignTitle} placeholder="Insert a title for the campaign" />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="campaignWallets" sm={2}>Wallets</Label>
             <Col sm={10}>
-              <Input type="text" name="title" id="campaignWallets" onChange={this.changeValue} value={this.state.currentValue} placeholder="Insert the number of wallets" /> 
+              <Input type="number" name="campaignWallets" id="campaignWallets" onChange={this.changeWallets} value={this.state.campaignWallets} placeholder="Insert the number of wallets" /> 
               <FormText color="muted">
                 Please enter the number of wallets that will be created for the campaign.<br />
                 The fields will be generated automatically, according to the number of wallets, to fill the amount of the load and its expiration date.
@@ -40,7 +45,7 @@ export default class FormAddCampaign extends Component {
             </Col>
           </FormGroup>
         </Form>
-        <FormWallets />
+        <FormWallets wallets={this.state.campaignWallets} />
       </div>
     )
   }

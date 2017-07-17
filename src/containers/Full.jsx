@@ -9,7 +9,8 @@ import { Container } from 'reactstrap'
 
 // Componenets
 import Header from '../components/Header'
-import Home from '../components/Home'
+import Home from '../views/Home'
+import ManageCampaigns from '../views/ManageCampaigns'
 
 class Full extends Component {
   render() {
@@ -19,6 +20,7 @@ class Full extends Component {
         <Container>
           <Switch>
             <Route path="/home" name="Home" component={Home}/>
+            <Route path="/manage/campaigns" name="Manage Campaigns" component={ManageCampaigns}/> 
             {/* <Route path="/components/buttons" name="Buttons" component={Buttons}/>
             <Route path="/components/cards" name="Cards" component={Cards}/>
             <Route path="/components/forms" name="Forms" component={Forms}/>
