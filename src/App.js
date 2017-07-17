@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { Button } from 'reactstrap';
+
 import bitcoin from 'bitcoinjs-lib';
 import bs58 from 'bs58';
 import bigi from 'bigi';
@@ -57,8 +59,12 @@ class App extends Component {
       const address = privateKey.getAddress()
       
       const decoded = bs58check.decode(toWIF)
-      console.log(decoded)
-      console.log(bs58check.encode(decoded))
+      //console.log(decoded)
+      //console.log(bs58check.encode(decoded))
+
+      console.log(toWIF)
+      console.log(address)
+      console.log(seed)
     })
   }
 
@@ -72,6 +78,7 @@ class App extends Component {
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
+          <Button color="danger">Danger!</Button>
         </p>
       </div>
     );
