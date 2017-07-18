@@ -9,18 +9,35 @@ export default class FormWallets extends Component {
     super(props)
 
     this.state = {
-      walletAmount: '',
-      walletExpiration: ''
+      wallets: []
     }
     this.changeAmount = this.changeAmount.bind(this)
     this.changeExpiration = this.changeExpiration.bind(this)
     this.generateForms = this.generateForms.bind(this)
   }
   changeAmount(e) {
-    this.setState({ walletAmount: e.target.value })
+    const number = e.target.name.replace('amount','')
+
+    let stateCopy = Object.assign({}, this.state)
+    stateCopy.wallets = stateCopy.wallets.slice()
+    stateCopy.wallets[number-1] = Object.assign({}, stateCopy.wallets[number-1])
+    stateCopy.wallets[number-1].number = number
+    stateCopy.wallets[number-1].amount = e.target.value
+    this.setState(stateCopy, () => {
+      this.props.changeWallets(this.state.wallets)
+    })
   }
   changeExpiration(e) {
-    this.setState({ walletExpiration: e.target.value })
+    const number = e.target.name.replace('expiration','')
+
+    let stateCopy = Object.assign({}, this.state)
+    stateCopy.wallets = stateCopy.wallets.slice()
+    stateCopy.wallets[number-1] = Object.assign({}, stateCopy.wallets[number-1])
+    stateCopy.wallets[number-1].number = number
+    stateCopy.wallets[number-1].expiration = e.target.value
+    this.setState(stateCopy, () => {
+      this.props.changeWallets(this.state.wallets)
+    })
   }
   generateForms(wallets) {
     const elements = []
@@ -32,13 +49,13 @@ export default class FormWallets extends Component {
             <FormGroup row>
               <Label for={"walletAmount"+i} sm={2}>Amount</Label>
               <Col sm={10}>
-                <Input type="text" name={"walletAmount"+i} onChange={this.changeAmount} placeholder="Insert a amount for load" />
+                <Input type="text" name={"amount"+i} onChange={this.changeAmount} placeholder="Insert a amount for load" />
               </Col>
             </FormGroup>
             <FormGroup row>
               <Label for={"walletExpiration"+i} sm={2}>Date</Label>
               <Col sm={10}>
-                <Input type="text" name={"walletExpiration"+i} onChange={this.changeExpiration} placeholder="Insert a expiration date" /> 
+                <Input type="text" name={"expiration"+i} onChange={this.changeExpiration} placeholder="Insert a expiration date" /> 
               </Col>
             </FormGroup>
           </Form>

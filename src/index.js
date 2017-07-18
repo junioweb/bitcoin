@@ -1,30 +1,41 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-// Importações para configurações de rotas da SPA (Single Page Application)
-import { HashRouter, Route, Switch } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
+import ReduxToastr from 'react-redux-toastr'
 
 // CSS do framework Bootstrap v4
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-// Containers
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import createHistory from 'history/createBrowserHistory'
+import { Route } from 'react-router'
+//import { HashRouter, Route, Switch } from 'react-router-dom'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import reducers from './reducers'
+
+// Middlwwares
+import thunk from 'redux-thunk'
+import multi from 'redux-multi'
+
+// Components
 import Full from './containers/Full'
 
-// Registro ServiceWorker para PWA (Progressive Web App - create-react-app)
-import registerServiceWorker from './registerServiceWorker'
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__
+  && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-const history = createBrowserHistory();
+const history = createHistory()
+const middleware = routerMiddleware(history)
+const store = applyMiddleware(middleware, thunk, multi)(createStore)(reducers, devTools)
 
-ReactDOM.render((
-  <HashRouter history={history}>
-    <Switch>
-      {/* <Route exact path="/login" name="Login Page" component={Login}/>
-      <Route exact path="/register" name="Register Page" component={Register}/>
-      <Route exact path="/404" name="Page 404" component={Page404}/>
-      <Route exact path="/500" name="Page 500" component={Page500}/> */}
-      <Route path="/" name="Principal" component={Full}/>
-    </Switch>
-  </HashRouter>
-), document.getElementById('root'))
-registerServiceWorker()
+ReactDOM.render(
+  <Provider store={store}>
+    { /* ConnectedRouter will use the store from Provider automatically */ }
+    <ConnectedRouter history={history}>
+      <div>
+        <Route path="/" component={Full}/>
+        <ReduxToastr preventDuplicates />
+      </div>
+    </ConnectedRouter>
+  </Provider>,
+  document.getElementById('root')
+)

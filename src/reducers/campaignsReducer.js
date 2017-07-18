@@ -1,12 +1,17 @@
-const INITIAL_STATE = {}
-
-export default (state=INITIAL_STATE, action) => {
+export default (state=[], action) => {
   switch (action.type) {
-      case 'FIELD_CHANGED':
-          return state
+    case 'ADD_CAMPAIGN':
+      return [
+        ...state,
+        action.payload
+      ]
+    case 'DELETE_CAMPAIGN':
+      return state.filter((value) => (
+        value.title !== action.payload
+      ))
 
-      default:
-          return state
+    default:
+        return state
   }
 
 }
