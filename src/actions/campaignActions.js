@@ -46,7 +46,7 @@ export function addCampaign(campaign) {
     toastr.error('Error occurred', error.message)
 
     return {
-      type: 'ERROR',
+      type: 'ERROR'
     }
   }
 }

@@ -5,6 +5,9 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+// Funcão para notificações
+import {toastr} from 'react-redux-toastr'
+
 // Actions
 import { addCampaign } from '../actions/campaignActions'
 
@@ -27,10 +30,26 @@ class ModalAddCampaign extends Component {
     }
     // Bind das funções
     this.changeCampaign = this.changeCampaign.bind(this)
+    this.addCampaign = this.addCampaign.bind(this)
   }
   // Função para evento onChange da Campaign
   changeCampaign(campaign) {
     this.setState({ campaign: campaign })
+  }
+  addCampaign() {
+    try {
+      this.props.campaigns.map(campaign => {
+        if (campaign.title === this.state.campaign.title)
+          throw new Error('Campaign with this title already exists')
+        
+        return true
+      })
+      if(this.props.addCampaign(this.state.campaign).type !== "ERROR")
+        this.props.toggle()
+    } catch (error) {
+      // Menssagem de erro
+      toastr.error('Error occurred', error.message)
+    }
   }
 
   render() {
@@ -42,10 +61,7 @@ class ModalAddCampaign extends Component {
             <FormAddCampaign changeCampaign={this.changeCampaign} />
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={() => {
-                this.props.addCampaign(this.state.campaign)
-                this.props.toggle()
-              }}>Generate</Button>{' '}
+            <Button color="primary" onClick={this.addCampaign}>Generate</Button>{' '}
             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -54,10 +70,14 @@ class ModalAddCampaign extends Component {
   }
 }
 
+// Mapeia state para props
+const mapStateToProps = state => ({
+  campaigns: state.campaigns,
+})
 // Mapeia actions para props
 const mapDispatchToProps = dispatch => bindActionCreators({
   addCampaign
 }, dispatch)
 
 // conecta redux porps
-export default withRouter(connect(null, mapDispatchToProps)(ModalAddCampaign))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ModalAddCampaign))
