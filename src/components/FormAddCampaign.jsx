@@ -10,13 +10,16 @@ export default class FormAddCampaign extends Component {
   constructor(props) {
     super(props)
 
+    // State principal para montagem do objeto
     this.state = {
       campaign: {}
     }
+    // Bind das funções
     this.changeTitle = this.changeTitle.bind(this)
     this.changeNumberWallets = this.changeNumberWallets.bind(this)
     this.changeWallets = this.changeWallets.bind(this)
   }
+  // Função para evento onChange do Title Campaign
   changeTitle(e) {
     this.setState({
       campaign: {
@@ -27,6 +30,7 @@ export default class FormAddCampaign extends Component {
       this.props.changeCampaign(this.state.campaign)
     })
   }
+  // Função para evento onChange do Number Wallets of the Campaign
   changeNumberWallets(e) {
     this.setState({
       campaign: {
@@ -37,6 +41,7 @@ export default class FormAddCampaign extends Component {
       this.props.changeCampaign(this.state.campaign)
     })
   }
+  // Função para evento onChange das Wallets of the Campaign
   changeWallets(wallets) {
     this.setState({
       campaign: {
@@ -61,7 +66,7 @@ export default class FormAddCampaign extends Component {
           <FormGroup row>
             <Label for="campaignWallets" sm={2}>Wallets</Label>
             <Col sm={10}>
-              <Input type="number" onChange={this.changeNumberWallets} placeholder="Insert the number of wallets" /> 
+              <Input type="number" min="0" onChange={this.changeNumberWallets} placeholder="Insert the number of wallets" /> 
               <FormText color="muted">
                 Please enter the number of wallets that will be created for the campaign.<br />
                 The fields will be generated automatically, according to the number of wallets, to fill the amount of the load and its expiration date.

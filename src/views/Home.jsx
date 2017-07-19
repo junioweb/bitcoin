@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+
+// Components Route
 import { Link as RouterLink } from 'react-router-dom'
 
 // Components Bootstrap v4
@@ -16,13 +18,15 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
 
+    // State do modal AddCampaign
     this.state = {
       modal: false,
       size: 'md'
     }
-
+    // Bind das funções
     this.toggle = this.toggle.bind(this)
   }
+  // Função para toggle do modal AddCampaign
   toggle() {
     this.setState({
       modal: !this.state.modal

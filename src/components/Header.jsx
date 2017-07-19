@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+
+// Components Route
 import { NavLink as RouterNavLink } from 'react-router-dom'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -15,19 +17,23 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
 
+    // State do modal AddCampaign
     this.state = {
       isOpen: false,
       modal: false,
       size: 'md'
     }
+    // Bind das funções
     this.toggle = this.toggle.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
   }
+  // Função para toggle do menu da NavBar em dispositivos móveis
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
+  // Função para toggle do modal AddCampaign
   toggleModal() {
     this.setState({
       modal: !this.state.modal

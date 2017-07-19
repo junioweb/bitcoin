@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+
+// Funcões para conectar redux
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -19,11 +21,14 @@ class ModalAddCampaign extends Component {
   constructor(props) {
     super(props)
 
+    // State principal para montagem do objeto
     this.state = {
       campaign: {}
     }
+    // Bind das funções
     this.changeCampaign = this.changeCampaign.bind(this)
   }
+  // Função para evento onChange da Campaign
   changeCampaign(campaign) {
     this.setState({ campaign: campaign })
   }
@@ -37,7 +42,10 @@ class ModalAddCampaign extends Component {
             <FormAddCampaign changeCampaign={this.changeCampaign} />
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={() => this.props.addCampaign(this.state.campaign)}>Generate</Button>{' '}
+            <Button color="primary" onClick={() => {
+                this.props.addCampaign(this.state.campaign)
+                this.props.toggle()
+              }}>Generate</Button>{' '}
             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -46,8 +54,10 @@ class ModalAddCampaign extends Component {
   }
 }
 
+// Mapeia actions para props
 const mapDispatchToProps = dispatch => bindActionCreators({
   addCampaign
 }, dispatch)
 
+// conecta redux porps
 export default withRouter(connect(null, mapDispatchToProps)(ModalAddCampaign))
