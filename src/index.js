@@ -33,7 +33,11 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <Route path="/" component={Full}/>
-        <ReduxToastr preventDuplicates />
+        <ReduxToastr
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          preventDuplicates
+        />
       </div>
     </ConnectedRouter>
   </Provider>,

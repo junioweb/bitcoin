@@ -6,9 +6,13 @@ export default (state=[], action) => {
         action.payload
       ]
     case 'DELETE_CAMPAIGN':
-      return state.filter((value) => (
-        value.title !== action.payload
-      ))
+      return state.map(campaign =>
+        (campaign.title === action.payload.campaign) 
+          ? {...campaign, wallets: campaign.wallets.filter(value => (
+              campaign.title === action.payload.campaign && value.number !== action.payload.wallet
+            ))}
+          : campaign
+      )
 
     default:
         return state

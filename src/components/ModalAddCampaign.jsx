@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
-import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {toastr} from 'react-redux-toastr'
 
 // Actions
 import { addCampaign } from '../actions/campaignActions'
@@ -39,10 +37,7 @@ class ModalAddCampaign extends Component {
             <FormAddCampaign changeCampaign={this.changeCampaign} />
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={() => [
-              this.props.addCampaign(this.state.campaign),
-              toastr.success('Campaign added', 'Successful operation')
-            ]}>Generate</Button>{' '}
+            <Button color="primary" onClick={() => this.props.addCampaign(this.state.campaign)}>Generate</Button>{' '}
             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
